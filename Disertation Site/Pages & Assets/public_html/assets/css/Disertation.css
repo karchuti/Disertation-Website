@@ -562,6 +562,7 @@ pre code {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+  padding-top: 50px;
 }
 
 @media (min-width: 576px) {
@@ -606,6 +607,7 @@ pre code {
           flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px;
+  padding-top: 50px;
 }
 
 .no-gutters {
@@ -11087,7 +11089,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p {
-  font-size: calc(13px + (15 - 13) * ((100vw - 300px) / (1300 - 300)));
+  font-size: calc(15px + (15 - 13) * ((100vw - 300px) / (1300 - 300)));
   font-weight: 100;
   opacity: 1;
   color: #111;
@@ -12216,7 +12218,7 @@ pre .code {
 }
 
 .section .section-title {
-  font-size: calc(20px + (35 - 20) * ((100vw - 300px) / (1300 - 300)));
+  font-size: calc(15px + (35 - 20) * ((100vw - 300px) / (1300 - 300)));
 }
 
 .section .section-subtitle {
