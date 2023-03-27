@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /*!
 =========================================================
-* Disertation Landing page
+* Meyawo Landing page
 =========================================================
 
 * Copyright: 2019 DevCRUD (https://devcrud.com)
@@ -12,6 +12,9 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+
+
+
 @import url("https://fonts.googleapis.com/css?family=Baloo+Paaji|Open+Sans:300,300i,400,400i,600,600i,700,700i");
 :root {
   --blue: #1e549f;
@@ -59,6 +62,7 @@ html {
 
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
+  padding-top: 50px;
 }
 
 body {
@@ -207,7 +211,7 @@ figure {
 img {
   vertical-align: middle;
   border-style: none;
-  border-radius: 1%;
+  border-radius: 5%;
   padding-bottom: 10px;.About
 }
 
@@ -11137,7 +11141,7 @@ p {
   border-radius: 100px;
 }
 
-.service-card {
+.content2-card {
   position: relative;
   min-height: 230px;
   border: 1px solid #dee2e6;
@@ -11145,11 +11149,11 @@ p {
   border-radius: 3px;
 }
 
-.service-card .body {
+.content2-card .body {
   padding: 10px;
 }
 
-.service-card .body img.icon {
+.content2-card .body img.icon {
   margin-top: 40px;
   width: 55px;
   margin-bottom: 25px;
@@ -11158,13 +11162,13 @@ p {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .service-card .body img.icon {
+  .content2-card .body img.icon {
     -webkit-transition: none;
     transition: none;
   }
 }
 
-.service-card .body .subtitle {
+.content2-card .body .subtitle {
   position: absolute;
   bottom: -100%;
   opacity: 0;
@@ -11174,36 +11178,36 @@ p {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .service-card .body .subtitle {
+  .content2-card .body .subtitle {
     -webkit-transition: none;
     transition: none;
   }
 }
 
-.service-card:hover .body img.icon {
+.content2-card:hover .body img.icon {
   margin-top: 5px;
   width: 45px;
   margin-bottom: 15px;
 }
 
-.service-card:hover .body .subtitle {
+.content2-card:hover .body .subtitle {
   bottom: 7px;
   opacity: 1;
   visibility: visible;
 }
 
-/*/ portfolio wrapper */
-.portfolio-card {
+/*/ content1 wrapper */
+.content1-card {
   display: block;
   position: relative;
   overflow: hidden;
 }
 
-.portfolio-card .portfolio-card-img {
+.content1-card .content1-card-img {
   width: 100%;
 }
 
-.portfolio-card .portfolio-card-overlay {
+.content1-card .content1-card-overlay {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -11224,13 +11228,13 @@ p {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .portfolio-card .portfolio-card-overlay {
+  .content1-card .content1-card-overlay {
     -webkit-transition: none;
     transition: none;
   }
 }
 
-.portfolio-card .portfolio-card-overlay .portfolio-card-caption {
+.content1-card .content1-card-overlay .content1-card-caption {
   display: block;
   position: absolute;
   top: 50%;
@@ -11241,7 +11245,7 @@ p {
   width: 100%;
 }
 
-.portfolio-card:hover .portfolio-card-overlay {
+.content1-card:hover .content1-card-overlay {
   opacity: 1;
   visibility: visible;
   width: 100%;
@@ -11250,10 +11254,10 @@ p {
 }
 
 @media (max-width: 767.98px) {
-  .portfolio-card {
+  .content1-card {
     margin-bottom: 30px;
   }
-  .service-card {
+  .content2-card {
     margin-bottom: 30px;
   }
 }
@@ -11401,8 +11405,8 @@ p {
   font-size: calc(14px + (18 - 14) * ((100vw - 300px) / (1300 - 300)));
 }
 
-/* blog wrapper */
-.blog-card {
+/* content3 wrapper */
+.content3-card {
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -11414,12 +11418,12 @@ p {
   overflow: hidden;
 }
 
-.blog-card-header {
+.content3-card-header {
   min-width: 350px;
   max-width: 350px;
 }
 
-.blog-card-img {
+.content3-card-img {
   border-radius: 0 0 0 0;
   width: 100%;
   height: 100%;
@@ -11427,24 +11431,24 @@ p {
      object-fit: cover;
 }
 
-.blog-card-body {
+.content3-card-body {
   padding: 30px 20px 30px 30px;
 }
 
-.blog-card-title {
+.content3-card-title {
   font-weight: 100;
 }
 
-.blog-card-caption {
+.content3-card-caption {
   margin: 15px 0 15px !important;
 }
 
-.blog-card-caption i {
+.content3-card-caption i {
   display: inline-block;
   width: 15px;
 }
 
-.blog-card-caption a {
+.content3-card-caption a {
   margin-right: 10px;
   color: #444;
   text-decoration: none;
@@ -11454,27 +11458,27 @@ p {
   font-size: 13px;
 }
 
-.blog-card-link {
+.content3-card-link {
   text-decoration: none;
   margin-top: 20px;
   display: block;
   font-size: 13px;
 }
 
-.blog-card-link i {
+.content3-card-link i {
   position: relative;
   top: 1px;
 }
 
 @media (max-width: 991.98px) {
-  .blog-card {
+  .content3-card {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column;
   }
-  .blog-card .blog-card-header {
+  .content3-card .content3-card-header {
     width: 100%;
     max-width: 100%;
     min-width: 100%;
@@ -11712,7 +11716,7 @@ pre .code {
 }
 
 .custom-navbar.affix {
-  background: #FFF;
+  background: #transparent;
 }
 
 .custom-navbar.affix .logo {
