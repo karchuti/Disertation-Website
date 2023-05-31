@@ -11649,6 +11649,7 @@ pre .code {
           align-items: center;
   -webkit-transition: all, 0.3s;
   transition: all, 0.3s;
+  margin-right: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
