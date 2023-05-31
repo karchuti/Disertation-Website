@@ -15,6 +15,14 @@
 
 
 
+.overall {
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  background-color: white;
+}
+
 
 
 
@@ -5781,8 +5789,8 @@ a.badge-dark:focus, a.badge-dark.focus {
   height: 0.3rem;
   overflow: hidden;
   font-size: 0.75rem;
-  background-color: #e9ecef;
   border-radius: 0.25rem;
+  background-image: linear-gradient(0.25turn, #4169e1, #b80f0a);
 }
 
 .progress-bar {
