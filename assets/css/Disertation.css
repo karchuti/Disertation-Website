@@ -36,6 +36,7 @@
   width: 100%;
   background-color: transparent;
 }
+
 *,
 *::before,
 *::after {
@@ -51,7 +52,7 @@ html {
 
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
-  padding-top: 50px;
+  padding-top: 100px;
 }
 
 body {
@@ -11518,16 +11519,19 @@ pre .code {
 }
 
 .hamburger-box {
-  width: 30px;
-  height: 21px;
+  width: 40px;
+  height: 30px;
   display: inline-block;
   position: relative;
+  background-color: white;
+  border-radius: 10px;
+  padding-left: 5px;
+  padding-top: 10px;
 }
 
 .hamburger-inner {
   display: block;
-  top: 50%;
-  margin-top: -1.5px;
+  
 }
 
 .hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
