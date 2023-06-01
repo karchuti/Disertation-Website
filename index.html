@@ -15,39 +15,38 @@
 		</div>
 	  </div>
 
-	<nav class="custom-navbar" data-spy="affix" data-offset-top="20">
-		<div class="container">
-			<ul class="nav">
-				<li class="item">
-					<a aria-label="Top of page" class="link" href="#home">Top</a>
-				</li>
-				<li class="item">
-					<a aria-label="About section" class="link" href="#about">About</a>
-				</li>
-				<li class="item">
-					<a aria-label="Storage section" class="link" href="#Storage">Storage</a>
-				</li>
-				<li class="item">
-					<a aria-label="Physical security section" class="link" href="#physicalSecurity">Physical
-						Security</a>
-				</li>
-				<li class="item">
-					<a aria-label="Encryption section" class="link" href="#Encryption">Encryption</a>
-				</li>
-				<li class="item">
-					<a aria-label="Audits section" class="link" href="#Audits">Audits</a>
-				</li>
-			</ul>
+	  
+	<nav>
+		<input id="nav-toggle" type="checkbox">
+		<ul class="links">
+			<li class="item">
+				<a aria-label="Top of page" class="link" href="#top">Top</a>
+			</li>
+			<li class="item">
+				<a aria-label="About section" class="link" href="#about">About</a>
+			</li>
+			<li class="item">
+				<a aria-label="Storage section" class="link" href="#Storage">Storage</a>
+			</li>
+			<li class="item">
+				<a aria-label="Physical security section" class="link" href="#physicalSecurity">Physical
+					Security</a>
+			</li>
+			<li class="item">
+				<a aria-label="Encryption section" class="link" href="#Encryption">Encryption</a>
+			</li>
+			<li class="item">
+				<a aria-label="Audits section" class="link" href="#Audits">Audits</a>
+			</li>
+		</ul>
+		<label for="nav-toggle" class="icon-burger">
+			<div class="line"></div>
+			<div class="line"></div>
+			<div class="line"></div>
+		</label>
+	</nav>
 
-				<a href="javascript:void(0)" aria-label="Menu Icon" id="nav-toggle" class="hamburger hamburger--elastic">
-						<div class="hamburger-box">
-					  		<div class="hamburger-inner">
-							</div>
-						</div>
-					</a>
-        </div>
-    </nav>
-	<header id="home" class="header">
+	<header id="top" class="header">
 		<div class="overlay"></div>
 		<div class="header-content container">
 			<h1 class="header-title">
@@ -55,8 +54,8 @@
 				<span class="down">The Cloud</span>
 
 			</h1>
-
 		</div>
+
 	</header>
 	<section class="section pt-0" id="about">
 		<div class="container text-center">
@@ -77,7 +76,6 @@
 			</div>
 		</div>
 		<div class="container text-center">
-
 			<div class="about">
 				<div class="about-img-holder">
 					<img src="assets/imgs/server1.jpeg" class="about-img" alt="Server room photo"><!--(HARANAS , Google Unveils New $750M Data Center As Part Of $9.5B Goal 22)-->
