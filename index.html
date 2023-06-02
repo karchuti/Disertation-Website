@@ -15,37 +15,18 @@
 		</div>
 	  </div>
 
-	  
-	<nav>
-		<input id="nav-toggle" type="checkbox">
-		<ul class="links">
-			<li class="item">
-				<a aria-label="Top of page" class="link" href="#top">Top</a>
-			</li>
-			<li class="item">
-				<a aria-label="About section" class="link" href="#about">About</a>
-			</li>
-			<li class="item">
-				<a aria-label="Storage section" class="link" href="#Storage">Storage</a>
-			</li>
-			<li class="item">
-				<a aria-label="Physical security section" class="link" href="#physicalSecurity">Physical
-					Security</a>
-			</li>
-			<li class="item">
-				<a aria-label="Encryption section" class="link" href="#Encryption">Encryption</a>
-			</li>
-			<li class="item">
-				<a aria-label="Audits section" class="link" href="#Audits">Audits</a>
-			</li>
-		</ul>
-		<label for="nav-toggle" class="icon-burger" aria-label="Menu">
-			<p class="line"></p>
-			<p class="line"></p>
-			<p class="line"></p>
-			Menu
-		</label>
-	</nav>
+<div class = "header-fixed">
+	<input class="menu-btn" type="checkbox" id="menu-btn" />
+	<label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+	<ul class="menu">
+	  <li><a href="#top">Top</a></li>
+	  <li><a href="#about">About</a></li>
+	  <li><a href="#Storage">Storage</a></li>
+	  <li><a href="#physicalSecurity">Physical Security</a></li>
+	  <li><a href="#Encryption">Encryption</a></li>
+	  <li><a href="#Audits">Audits</a></li>
+	</ul>
+</div>
 
 	<header id="top" class="header">
 		<div class="overlay"></div>
@@ -53,11 +34,12 @@
 			<h1 class="header-title">
 				<span class="up">How do business store your data?</span>
 				<span class="down">The Cloud</span>
-
 			</h1>
 		</div>
-
 	</header>
+
+
+
 	<section class="section pt-0" id="about">
 		<div class="container text-center">
 			<div class="about">
@@ -542,9 +524,6 @@
 			<script>document.write(new Date().getFullYear())</script> &copy;
 		</p>
 	</footer>
-	<script src="assets/vendors/jquery/jquery-3.4.1.js"></script>
-	<script src="assets/vendors/bootstrap/bootstrap.bundle.js"></script>
-	<script src="assets/vendors/bootstrap/bootstrap.affix.js"></script>
 	<script src="assets/js/Disertation.js"></script>
 </body>
 

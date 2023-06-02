@@ -7,4 +7,3 @@ function scrollFunction() {
   var scrollPos = (elementScroll / windowHeight) * 100;
   document.getElementById("progBar").style.width = scrollPos + "%";
 }
-
