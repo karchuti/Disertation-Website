@@ -54,11 +54,13 @@ nav .links a {
 nav :checked ~ .links {
   bottom: auto;
   transform: translateX(0%);
+  
 }
 
 nav :checked ~ .links a {
   opacity: 1;
   transform: translateX(0%);
+  
 }
 
 nav {
