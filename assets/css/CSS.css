@@ -1,4 +1,7 @@
 @charset "UTF-8";
+.highlight {
+  background-color: yellow;
+}
 .header-fixed ul {
   margin: 0;
   padding: 0;
