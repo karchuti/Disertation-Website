@@ -2,6 +2,11 @@
 .highlight {
   background-color: yellow;
 }
+
+.current-match {
+  font-weight: bold;
+  color: red;
+}
 .header-fixed ul {
   margin: 0;
   padding: 0;
@@ -2510,7 +2515,6 @@ p {
 }
 .header-title {
   font-size: 2.4rem;
-  font-weight: bold;
   opacity: .8;
   color: #212529;
 }

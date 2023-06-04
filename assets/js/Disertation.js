@@ -5,115 +5,173 @@ function scrollFunction() {
   var scrollPos = (elementScroll / windowHeight) * 100;
   document.getElementById("progBar").style.width = scrollPos + "%";
 }
+
+// /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+window.onscroll = function () {
+  scrollFunction();
+};
+
+function scrollFunction() {
+  var elementScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  var windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var scrollPos = (elementScroll / windowHeight) * 100;
+  document.getElementById("progBar").style.width = scrollPos + "%";
+}
+
 window.onscroll = function() {
   scrollFunction();
 };
 
-var searchInput = document.getElementById("searchInput");
-var searchButton = document.getElementById("searchButton");
-var matches = [];
-var currentIndex = -1;
+var searchTerm = "";
 
-searchButton.addEventListener("click", search);
-searchInput.addEventListener("input", resetSearch);
+function scrollFunction() {
+  var elementScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  var windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var scrollPos = (elementScroll / windowHeight) * 100;
+  document.getElementById("progBar").style.width = scrollPos + "%";
+}
 
-function search() {
-  var searchTerm = searchInput.value.toLowerCase();
-  matches = [];
-  currentIndex = -1;
+var searchIndex = 0;
+var searchResults = [];
 
-  var textElements = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6");
+document
+  .getElementById("searchButton")
+  .addEventListener("click", performSearch);
+document
+  .getElementById("nextButton")
+  .addEventListener("click", goToNextResult);
+document
+  .getElementById("prevButton")
+  .addEventListener("click", goToPrevResult);
+document
+  .getElementById("searchInput")
+  .addEventListener("input", enableSearchButton);
 
-  for (var i = 0; i < textElements.length; i++) {
-    var element = textElements[i];
-    var text = element.textContent.toLowerCase();
+function performSearch() {
+  searchTerm = document.getElementById("searchInput").value.trim();
 
-    if (text.includes(searchTerm)) {
-      var match = {
-        element: element,
-        text: text,
-        index: text.indexOf(searchTerm)
-      };
-      matches.push(match);
+  searchResults = [];
+  removeHighlights();
+
+  if (searchTerm !== "") {
+    var elementsToSearch = document.querySelectorAll("h1, h2, p");
+
+    for (var i = 0; i < elementsToSearch.length; i++) {
+      var elementText = elementsToSearch[i].textContent;
+
+      if (
+        elementText.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        isHighlightedElement(elementsToSearch[i])
+      ) {
+        var regex = new RegExp(searchTerm, "gi");
+        var matches = elementText.matchAll(regex);
+
+        for (var match of matches) {
+          var matchIndex = match.index;
+          var matchLength = match[0].length;
+
+          searchResults.push({
+            element: elementsToSearch[i],
+            index: matchIndex,
+            length: matchLength,
+          });
+        }
+      }
     }
-  }
 
-  var matchCount = matches.length;
-  console.log("Matches found: " + matchCount);
-
-  if (matchCount > 0) {
-    currentIndex = 0;
-    scrollToMatch();
+    if (searchResults.length > 0) {
+      searchIndex = 0;
+      highlightAllMatches();
+      showSearchResult(searchIndex);
+      document.getElementById("nextButton").disabled = false;
+      document.getElementById("prevButton").disabled = false;
+    } else {
+      document.getElementById("searchResults").innerHTML = "No results found.";
+      document.getElementById("nextButton").disabled = true;
+      document.getElementById("prevButton").disabled = true;
+    }
+  } else {
+    document.getElementById("searchResults").innerHTML = "";
+    document.getElementById("nextButton").disabled = true;
+    document.getElementById("prevButton").disabled = true;
   }
 }
 
-function scrollToMatch() {
-  if (currentIndex >= 0 && currentIndex < matches.length) {
-    var match = matches[currentIndex];
-    var element = match.element;
-    var matchIndex = match.index;
+function goToNextResult() {
+  searchIndex++;
+  if (searchIndex >= searchResults.length) {
+    searchIndex = 0;
+  }
+  showSearchResult(searchIndex);
+}
 
-    element.scrollIntoView();
+function goToPrevResult() {
+  searchIndex--;
+  if (searchIndex < 0) {
+    searchIndex = searchResults.length - 1;
+  }
+  showSearchResult(searchIndex);
+}
 
+function enableSearchButton() {
+  var searchTerm = document.getElementById("searchInput").value.trim();
+  document.getElementById("searchButton").disabled = searchTerm === "";
+}
+
+function highlightAllMatches() {
+  for (var i = 0; i < searchResults.length; i++) {
+    var result = searchResults[i];
+    var element = result.element;
+    var start = result.index;
+    var length = result.length;
+
+    var text = element.textContent;
     var highlightedText =
-      '<span class="highlight">' + searchInput.value + "</span>";
-    var updatedText = element.innerHTML.replace(
-      new RegExp(searchInput.value, "gi"),
-      highlightedText
-    );
-    element.innerHTML = updatedText;
+      text.substring(0, start) +
+      '<span class="highlight">' +
+      text.substring(start, start + length) +
+      "</span>" +
+      text.substring(start + length);
 
-    var matchNumber = currentIndex + 1;
-    var matchCount = matches.length;
-    console.log("Match " + matchNumber + " of " + matchCount);
-    document.getElementById("matchCount").textContent =
-      "Match " + matchNumber + " of " + matchCount;
+    element.innerHTML = highlightedText;
   }
 }
 
-function removeHighlighting() {
-  var elements = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6");
-  for (var i = 0; i < elements.length; i++) {
-    var element = elements[i];
-    element.innerHTML = element.textContent;
+function showSearchResult(index) {
+  var result = searchResults[index];
+  var element = result.element;
+
+  if (index > 0) {
+    var previousMatch = searchResults[index - 1].element;
+    var previousMatches = previousMatch.querySelectorAll(".highlight");
+    previousMatches.forEach(function (match) {
+      match.classList.remove("highlight");
+      match.style.fontWeight = "normal";
+    });
   }
+
+  var currentMatches = element.querySelectorAll(".highlight");
+  currentMatches.forEach(function (match) {
+    match.classList.add("highlight");
+    match.style.fontWeight = "bold";
+  });
+
+  element.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-function resetSearch() {
-  removeHighlighting();
-  matches = [];
-  currentIndex = -1;
-  document.getElementById("matchCount").textContent = "";
+function removeHighlights() {
+  var highlightedElements = document.querySelectorAll(".highlight");
+  highlightedElements.forEach(function (element) {
+    var parentElement = element.parentNode;
+    var text = element.textContent;
+    var textNode = document.createTextNode(text);
+    parentElement.replaceChild(textNode, element);
+  });
 }
 
-function scrollToPreviousMatch() {
-  if (currentIndex > 0) {
-    currentIndex--;
-    removeHighlighting();
-    scrollToMatch();
-    updateCurrentMatch();
-  }
+function isHighlightedElement(element) {
+  var excludedTags = ["LABEL", "A"];
+  var tagName = element.tagName;
+  return !excludedTags.includes(tagName.toUpperCase());
 }
-
-function scrollToNextMatch() {
-  if (currentIndex < matches.length - 1) {
-    currentIndex++;
-    removeHighlighting();
-    scrollToMatch();
-    updateCurrentMatch();
-  }
-}
-
-document.getElementById("previousButton").addEventListener("click", scrollToPreviousMatch);
-
-document.getElementById("nextButton").addEventListener("click", scrollToNextMatch);
-
-
-function updateCurrentMatch() {
-  var matchNumber = currentIndex + 1;
-  var matchCount = matches.length;
-  document.getElementById("currentMatch").textContent =
-    "Match " + matchNumber + " of " + matchCount;
-}
-
-
