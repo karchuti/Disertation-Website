@@ -15,9 +15,18 @@
 			<div class="progress" id="progBar"></div>
 		</div>
 	</div>
+
 	<div class="header-fixed">
 		<input class="menu-btn" type="checkbox" id="menu-btn">
 		<label aria-label="Menu Icon" class="menu-icon" for="menu-btn"><span class="navicon"> &nbsp; </span></label>
+		<div class="search-box">
+			<input type="text" id="search-input" placeholder="Enter search term">
+			<button id="search-button">Search</button>
+			<button id="clear-button">Clear</button>
+			<span id="match-count" class="hidden"></span>
+			<button id="previous-button" class="hidden">Previous</button>
+			<button id="next-button" class="hidden">Next</button>
+		</div>
 		<ul class="menu">
 			<li><a aria-label="Go to Top of page" href="#Top">Top</a></li>
 			<li><a aria-label="Go to About section" href="#About">About</a></li>
@@ -26,15 +35,9 @@
 			<li><a aria-label="Go to Encryption section" href="#Encryption">Encryption</a></li>
 			<li><a aria-label="Go to Audits section" href="#Audits">Audits</a></li>
 		</ul>
-
-		<input type="text" id="searchInput" placeholder="Search..." />
-		<button id="searchButton">Search</button>
-		<button id="nextButton" disabled>Next</button>
-		<button id="prevButton" disabled>Previous</button>
-
-		<div id="searchResults"></div>
-
 	</div>
+
+
 	<header id="Top" class="header">
 		<div class="overlay"></div>
 		<div class="header-content container">
@@ -43,12 +46,7 @@
 				<span class="down">The Cloud</span>
 			</h1>
 		</div>
-
 	</header>
-
-
-
-
 
 	<section class="section pt-0" id="About">
 		<section>

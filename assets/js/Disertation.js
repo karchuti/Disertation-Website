@@ -1,177 +1,102 @@
-window.onscroll = function () { scrollFunction() };
-function scrollFunction() {
-  var elementScroll = document.body.scrollTop || document.documentElement.scrollTop;
-  var windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  var scrollPos = (elementScroll / windowHeight) * 100;
-  document.getElementById("progBar").style.width = scrollPos + "%";
-}
+var searchButton = document.getElementById("search-button");
+var clearButton = document.getElementById("clear-button");
+var matchCount = document.getElementById("match-count");
+var previousButton = document.getElementById("previous-button");
+var nextButton = document.getElementById("next-button");
 
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////
+clearButton.classList.add("hidden"); // Initially hide the clear button
+matchCount.classList.add("hidden"); // Initially hide the match count
+previousButton.classList.add("hidden"); // Initially hide the previous match button
+nextButton.classList.add("hidden"); // Initially hide the next match button
 
-window.onscroll = function () {
-  scrollFunction();
-};
+var highlightedElements = []; // Array to store the highlighted elements
+var currentIndex = -1; // Current index of the highlighted element
 
-function scrollFunction() {
-  var elementScroll = document.body.scrollTop || document.documentElement.scrollTop;
-  var windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  var scrollPos = (elementScroll / windowHeight) * 100;
-  document.getElementById("progBar").style.width = scrollPos + "%";
-}
+searchButton.addEventListener("click", function () {
+  var input = document.getElementById("search-input").value;
+  var elementsToSearch = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, label, span");
+  var count = 0; // Initialize the match count
 
-window.onscroll = function() {
-  scrollFunction();
-};
+  // Validate input
+  if (input.trim() === "") {
+    // Display an error message or take appropriate action
+    alert("Please enter a search term.");
+    return;
+  }
 
-var searchTerm = "";
+  // Run the clear function to remove previous highlights
+  clearButton.click();
 
-function scrollFunction() {
-  var elementScroll = document.body.scrollTop || document.documentElement.scrollTop;
-  var windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  var scrollPos = (elementScroll / windowHeight) * 100;
-  document.getElementById("progBar").style.width = scrollPos + "%";
-}
+  for (var i = 0; i < elementsToSearch.length; i++) {
+    var element = elementsToSearch[i];
+    var text = element.innerText;
 
-var searchIndex = 0;
-var searchResults = [];
+    if (text.includes(input)) {
+      var highlightedText = text.replace(new RegExp(input, "gi"), function (match) {
+        count++; // Increment the match count for each match
+        return "<span class='highlight'>" + match + "</span>";
+      });
 
-document
-  .getElementById("searchButton")
-  .addEventListener("click", performSearch);
-document
-  .getElementById("nextButton")
-  .addEventListener("click", goToNextResult);
-document
-  .getElementById("prevButton")
-  .addEventListener("click", goToPrevResult);
-document
-  .getElementById("searchInput")
-  .addEventListener("input", enableSearchButton);
+      element.innerHTML = highlightedText;
 
-function performSearch() {
-  searchTerm = document.getElementById("searchInput").value.trim();
-
-  searchResults = [];
-  removeHighlights();
-
-  if (searchTerm !== "") {
-    var elementsToSearch = document.querySelectorAll("h1, h2, p");
-
-    for (var i = 0; i < elementsToSearch.length; i++) {
-      var elementText = elementsToSearch[i].textContent;
-
-      if (
-        elementText.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        isHighlightedElement(elementsToSearch[i])
-      ) {
-        var regex = new RegExp(searchTerm, "gi");
-        var matches = elementText.matchAll(regex);
-
-        for (var match of matches) {
-          var matchIndex = match.index;
-          var matchLength = match[0].length;
-
-          searchResults.push({
-            element: elementsToSearch[i],
-            index: matchIndex,
-            length: matchLength,
-          });
-        }
-      }
+      // Store the highlighted element in the array
+      highlightedElements.push(element);
     }
+  }
 
-    if (searchResults.length > 0) {
-      searchIndex = 0;
-      highlightAllMatches();
-      showSearchResult(searchIndex);
-      document.getElementById("nextButton").disabled = false;
-      document.getElementById("prevButton").disabled = false;
-    } else {
-      document.getElementById("searchResults").innerHTML = "No results found.";
-      document.getElementById("nextButton").disabled = true;
-      document.getElementById("prevButton").disabled = true;
-    }
+  if (count > 0) {
+    matchCount.textContent = count + " match(es) found";
+    matchCount.classList.remove("hidden"); // Show the match count
+    previousButton.classList.remove("hidden"); // Show the previous match button
+    nextButton.classList.remove("hidden"); // Show the next match button
+    clearButton.classList.remove("hidden"); // Show the clear button
+    searchButton.classList.add("hidden"); // Hide the search button
+    currentIndex = -1; // Reset the current index
   } else {
-    document.getElementById("searchResults").innerHTML = "";
-    document.getElementById("nextButton").disabled = true;
-    document.getElementById("prevButton").disabled = true;
-  }
-}
-
-function goToNextResult() {
-  searchIndex++;
-  if (searchIndex >= searchResults.length) {
-    searchIndex = 0;
-  }
-  showSearchResult(searchIndex);
-}
-
-function goToPrevResult() {
-  searchIndex--;
-  if (searchIndex < 0) {
-    searchIndex = searchResults.length - 1;
-  }
-  showSearchResult(searchIndex);
-}
-
-function enableSearchButton() {
-  var searchTerm = document.getElementById("searchInput").value.trim();
-  document.getElementById("searchButton").disabled = searchTerm === "";
-}
-
-function highlightAllMatches() {
-  for (var i = 0; i < searchResults.length; i++) {
-    var result = searchResults[i];
-    var element = result.element;
-    var start = result.index;
-    var length = result.length;
-
-    var text = element.textContent;
-    var highlightedText =
-      text.substring(0, start) +
-      '<span class="highlight">' +
-      text.substring(start, start + length) +
-      "</span>" +
-      text.substring(start + length);
-
-    element.innerHTML = highlightedText;
-  }
-}
-
-function showSearchResult(index) {
-  var result = searchResults[index];
-  var element = result.element;
-
-  if (index > 0) {
-    var previousMatch = searchResults[index - 1].element;
-    var previousMatches = previousMatch.querySelectorAll(".highlight");
-    previousMatches.forEach(function (match) {
-      match.classList.remove("highlight");
-      match.style.fontWeight = "normal";
-    });
+    alert("No matches found.");
   }
 
-  var currentMatches = element.querySelectorAll(".highlight");
-  currentMatches.forEach(function (match) {
-    match.classList.add("highlight");
-    match.style.fontWeight = "bold";
-  });
+  // Preserve the search input value
+  document.getElementById("search-input").value = input;
+});
+clearButton.addEventListener("click", function () {
+  var elementsToClear = document.querySelectorAll(".highlight");
 
-  element.scrollIntoView({ behavior: "smooth", block: "center" });
-}
+  for (var i = 0; i < elementsToClear.length; i++) {
+    var element = elementsToClear[i];
+    element.outerHTML = element.innerText;
+  }
 
-function removeHighlights() {
-  var highlightedElements = document.querySelectorAll(".highlight");
-  highlightedElements.forEach(function (element) {
-    var parentElement = element.parentNode;
-    var text = element.textContent;
-    var textNode = document.createTextNode(text);
-    parentElement.replaceChild(textNode, element);
-  });
-}
+  document.getElementById("search-input").value = "";
+  clearButton.classList.add("hidden"); // Hide the clear button
+  matchCount.classList.add("hidden"); // Hide the match count
+  previousButton.classList.add("hidden"); // Hide the previous match button
+  nextButton.classList.add("hidden"); // Hide the next match button
+  searchButton.classList.remove("hidden"); // Show the search button
+  highlightedElements = []; // Clear the highlighted elements array
+  currentIndex = -1; // Reset the current index
+});
 
-function isHighlightedElement(element) {
-  var excludedTags = ["LABEL", "A"];
-  var tagName = element.tagName;
-  return !excludedTags.includes(tagName.toUpperCase());
+previousButton.addEventListener("click", function () {
+  if (currentIndex > 0) {
+    // Remove blue background color from the current highlighted element
+    highlightedElements[currentIndex].style.backgroundColor = "";
+
+    currentIndex--;
+    scrollToElement(highlightedElements[currentIndex]);
+  }
+});
+
+nextButton.addEventListener("click", function () {
+  if (currentIndex < highlightedElements.length - 1) {
+    // Remove blue background color from the current highlighted element
+    highlightedElements[currentIndex].style.backgroundColor = "";
+
+    currentIndex++;
+    scrollToElement(highlightedElements[currentIndex]);
+  }
+});
+
+function scrollToElement(element) {
+  element.scrollIntoView({ behavior: "smooth" });
 }
