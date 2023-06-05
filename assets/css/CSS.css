@@ -197,6 +197,7 @@ h6 {
 p {
   margin-top: 0;
   margin-bottom: 1rem;
+  font-size: 14pt;
 }
 
 ol,
@@ -2806,7 +2807,7 @@ a.text-dark:focus {
 
 .infos .title .subtitle,
 .infos .socials .subtitle {
-  font-size: 14px;
+  font-size: 14pt;
   opacity: .9;
 }
 
@@ -2827,7 +2828,7 @@ a.text-dark:focus {
 }
 
 .infos .social-links a {
-  font-size: 14px;
+  font-size: 14pt;
   color: #fff;
 }
 
@@ -2854,7 +2855,7 @@ p {
 }
 
 .xs-font {
-  font-size: 13px;
+  font-size: 14pt;
   opacity: .5;
 }
 
