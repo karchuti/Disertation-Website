@@ -52,6 +52,7 @@ searchButton.addEventListener("click", function () {
     clearButton.classList.remove("hidden"); // Show the clear button
     searchButton.classList.add("hidden"); // Hide the search button
     currentIndex = -1; // Reset the current index
+    scrollToNextMatch(); // Scroll to the first match
   } else {
     alert("No matches found.");
   }
@@ -59,23 +60,8 @@ searchButton.addEventListener("click", function () {
   // Preserve the search input value
   document.getElementById("search-input").value = input;
 });
-clearButton.addEventListener("click", function () {
-  var elementsToClear = document.querySelectorAll(".highlight");
 
-  for (var i = 0; i < elementsToClear.length; i++) {
-    var element = elementsToClear[i];
-    element.outerHTML = element.innerText;
-  }
-
-  document.getElementById("search-input").value = "";
-  clearButton.classList.add("hidden"); // Hide the clear button
-  matchCount.classList.add("hidden"); // Hide the match count
-  previousButton.classList.add("hidden"); // Hide the previous match button
-  nextButton.classList.add("hidden"); // Hide the next match button
-  searchButton.classList.remove("hidden"); // Show the search button
-  highlightedElements = []; // Clear the highlighted elements array
-  currentIndex = -1; // Reset the current index
-});
+// ...
 
 previousButton.addEventListener("click", function () {
   if (currentIndex > 0) {
@@ -96,6 +82,11 @@ nextButton.addEventListener("click", function () {
     scrollToElement(highlightedElements[currentIndex]);
   }
 });
+
+function scrollToNextMatch() {
+  currentIndex = 0; // Set the current index to the first match
+  scrollToElement(highlightedElements[currentIndex]);
+}
 
 function scrollToElement(element) {
   element.scrollIntoView({ behavior: "smooth" });
