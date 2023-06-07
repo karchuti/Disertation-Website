@@ -1,5 +1,7 @@
 @charset "UTF-8";
-
+.current-highlight {
+  background-color: blue;
+}
 /*  */
 .search-box {
   float: left;
