@@ -1,116 +1,104 @@
-var searchButton = document.getElementById("search-button");
-var clearButton = document.getElementById("clear-button");
-var matchCount = document.getElementById("match-count");
-var previousButton = document.getElementById("previous-button");
-var nextButton = document.getElementById("next-button");
+var searchInput = document.createElement("input");
+searchInput.type = "text";
+searchInput.placeholder = "Search";
+searchInput.style.position = "fixed";
+searchInput.style.top = "10px";
+searchInput.style.left = "10px";
+searchInput.style.padding = "5px";
+searchInput.style.border = "1px solid #ccc";
+searchInput.style.borderRadius = "4px";
+searchInput.style.zIndex = "9999";
 
-clearButton.classList.add("hidden"); // Initially hide the clear button
-matchCount.classList.add("hidden"); // Initially hide the match count
-previousButton.classList.add("hidden"); // Initially hide the previous match button
-nextButton.classList.add("hidden"); // Initially hide the next match button
+document.body.appendChild(searchInput);
 
-var highlightedElements = []; // Array to store the highlighted elements
-var currentIndex = -1; // Current index of the highlighted element
+var clearButton = document.createElement("button");
+clearButton.textContent = "Clear";
+clearButton.style.position = "fixed";
+clearButton.style.top = "10px";
+clearButton.style.left = "calc(10px + " + searchInput.offsetWidth + "px + 5px)";
+clearButton.style.padding = "5px 10px";
+clearButton.style.border = "1px solid #ccc";
+clearButton.style.borderRadius = "4px";
+clearButton.style.backgroundColor = "#fff";
+clearButton.style.zIndex = "9999";
+clearButton.style.display = "none";
 
-searchButton.addEventListener("click", function () {
-  var input = document.getElementById("search-input").value;
-  var elementsToSearch = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, label, span");
-  var count = 0; // Initialize the match count
+document.body.appendChild(clearButton);
 
-  // Validate input
-  if (input.trim() === "") {
-    // Display an error message or take appropriate action
-    alert("Please enter a search term.");
-    return;
-  }
+var matchCount = document.createElement("div");
+matchCount.id = "match-count";
+matchCount.style.position = "fixed";
+matchCount.style.top = "30px";
+matchCount.style.left = "10px";
+matchCount.style.padding = "5px 10px";
+matchCount.style.backgroundColor = "#fff";
+matchCount.style.border = "1px solid #ccc";
+matchCount.style.borderRadius = "4px";
+matchCount.style.zIndex = "9999";
+matchCount.style.display = "none";
 
-  // Run the clear function to remove previous highlights
-  clearSearchResults();
+document.body.appendChild(matchCount);
 
-  for (var i = 0; i < elementsToSearch.length; i++) {
-    var element = elementsToSearch[i];
-    var text = element.innerText;
+searchInput.addEventListener("input", function () {
+  var searchText = searchInput.value.trim().toLowerCase();
+  var elements = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, label, span");
+  var count = 0;
 
-    if (text.includes(input)) {
-      var regex = new RegExp("(\\b" + input + "\\b)", "gi");
-      var highlightedText = text.replace(regex, function (match) {
-        count++; // Increment the match count for each match
-        return "<span class='highlight'>" + match + "</span>";
-      });
+  for (var i = 0; i < elements.length; i++) {
+    var element = elements[i];
+    var text = element.innerText.toLowerCase();
+    var regex = new RegExp("(" + searchText + ")", "gi");
 
+    if (text.includes(searchText)) {
+      var highlightedText = text.replace(regex, "<span class='highlight'>$1</span>");
       element.innerHTML = highlightedText;
-
-      // Store the highlighted element in the array
-      highlightedElements.push(element);
+      count++;
+    } else {
+      element.innerHTML = text;
     }
   }
 
-  if (count > 0) {
-    matchCount.textContent = count + " match(es) found";
-    matchCount.classList.remove("hidden"); // Show the match count
-    previousButton.classList.remove("hidden"); // Show the previous match button
-    nextButton.classList.remove("hidden"); // Show the next match button
-    clearButton.classList.remove("hidden"); // Show the clear button
-    searchButton.classList.add("hidden"); // Hide the search button
-    currentIndex = -1; // Reset the current index
-    scrollToNextMatch(); // Scroll to the first match and highlight it
-  } else {
-    alert("No matches found.");
+  if (searchText === "") {
+    clearSearchResults();
   }
 
-  // Preserve the search input value
-  document.getElementById("search-input").value = input;
+  showMatchCount(count);
+  toggleClearButton(searchText);
 });
 
-clearButton.addEventListener("click", clearSearchResults);
-
-previousButton.addEventListener("click", function () {
-  if (currentIndex > 0) {
-    // Remove the current highlight from the previous highlighted element
-    highlightedElements[currentIndex].querySelector(".highlight").classList.remove("current-highlight");
-    currentIndex--;
-    // Add the current highlight to the new current highlighted element
-    highlightedElements[currentIndex].querySelector(".highlight").classList.add("current-highlight");
-    scrollToElement(highlightedElements[currentIndex]);
-  }
-});
-
-nextButton.addEventListener("click", function () {
-  if (currentIndex < highlightedElements.length - 1) {
-    // Remove the current highlight from the previous highlighted element
-    highlightedElements[currentIndex].querySelector(".highlight").classList.remove("current-highlight");
-    currentIndex++;
-    // Add the current highlight to the new current highlighted element
-    highlightedElements[currentIndex].querySelector(".highlight").classList.add("current-highlight");
-    scrollToElement(highlightedElements[currentIndex]);
-  }
+clearButton.addEventListener("click", function () {
+  searchInput.value = "";
+  searchInput.focus();
+  clearSearchResults();
+  toggleClearButton("");
 });
 
 function clearSearchResults() {
-  var elementsToClear = document.querySelectorAll(".highlight");
+  var elements = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, label, span");
 
-  for (var i = 0; i < elementsToClear.length; i++) {
-    var element = elementsToClear[i];
-    element.outerHTML = element.innerText;
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].innerHTML = elements[i].innerText;
   }
 
-  document.getElementById("search-input").value = "";
-  clearButton.classList.add("hidden"); // Hide the clear button
-  matchCount.classList.add("hidden"); // Hide the match count
-  previousButton.classList.add("hidden"); // Hide the previous match button
-  nextButton.classList.add("hidden"); // Hide the next match button
-  searchButton.classList.remove("hidden"); // Show the search button
-  highlightedElements = []; // Clear the highlighted elements array
-  currentIndex = -1; // Reset the current index
+  searchInput.value = "";
+  searchInput.focus();
+  matchCount.style.display = "none";
+  toggleClearButton("");
 }
 
-function scrollToNextMatch() {
-  currentIndex = 0; // Set the current index to the first match
-  // Add the current highlight to the first match
-  highlightedElements[currentIndex].querySelector(".highlight").classList.add("current-highlight");
-  scrollToElement(highlightedElements[currentIndex]);
+function showMatchCount(count) {
+  if (count > 0 && searchInput.value.trim() !== "") {
+    matchCount.textContent = count + " match(es) found";
+    matchCount.style.display = "block";
+  } else {
+    matchCount.style.display = "none";
+  }
 }
 
-function scrollToElement(element) {
-  element.scrollIntoView({ behavior: "smooth" });
+function toggleClearButton(searchText) {
+  if (searchText === "") {
+    clearButton.style.display = "none";
+  } else {
+    clearButton.style.display = "block";
+  }
 }
