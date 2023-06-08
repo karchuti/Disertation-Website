@@ -1,6 +1,16 @@
 @charset "UTF-8";
-.current-highlight {
-  background-color: blue;
+.content1-card.highlight-border {
+  border: 2px solid #ff0000; /* Update the border style as needed */
+}
+.highlight-border {
+  border: 2px solid #ff0000; /* Replace with your desired border style */
+}
+.highlight {
+  background-color: yellow;
+}
+
+.current {
+  background-color: aqua;
 }
 /*  */
 .search-box {
@@ -90,7 +100,7 @@ li {
   box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
   position: fixed;
   width: 100%;
-  z-index: 3;
+  z-index: 1;
 }
 
 /* menu btn */
@@ -156,7 +166,7 @@ li {
 .overall {
   position: fixed;
   top: 0;
-  z-index: 10;
+  z-index: 3;
   width: 100%;
   background-color: transparent;
 }

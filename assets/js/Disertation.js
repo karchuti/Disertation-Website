@@ -1,69 +1,95 @@
 var searchInput = document.createElement("input");
 searchInput.type = "text";
 searchInput.placeholder = "Search";
-searchInput.style.position = "fixed";
-searchInput.style.top = "10px";
-searchInput.style.left = "10px";
-searchInput.style.padding = "5px";
-searchInput.style.border = "1px solid #ccc";
-searchInput.style.borderRadius = "4px";
-searchInput.style.zIndex = "9999";
+searchInput.style.cssText = "position: fixed; top: 10px; left: 10px; padding: 5px; border: 1px solid #ccc; border-radius: 4px; z-index: 2;";
 
 document.body.appendChild(searchInput);
 
 var clearButton = document.createElement("button");
 clearButton.textContent = "Clear";
-clearButton.style.position = "fixed";
-clearButton.style.top = "10px";
-clearButton.style.left = "calc(10px + " + searchInput.offsetWidth + "px + 5px)";
-clearButton.style.padding = "5px 10px";
-clearButton.style.border = "1px solid #ccc";
-clearButton.style.borderRadius = "4px";
-clearButton.style.backgroundColor = "#fff";
-clearButton.style.zIndex = "9999";
-clearButton.style.display = "none";
+clearButton.style.cssText = "position: fixed; top: 10px; left: calc(10px + " + searchInput.offsetWidth + "px + 5px); padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; z-index: 2; display: none;";
 
 document.body.appendChild(clearButton);
 
+var nextButton = document.createElement("button");
+nextButton.style.cssText = "position: fixed; top: 10px; left: calc(10px + " + searchInput.offsetWidth + "px + 105px); padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; z-index: 2; display: none;";
+nextButton.textContent = "→";
+
+document.body.appendChild(nextButton);
+
+var previousButton = document.createElement("button");
+previousButton.style.cssText = "position: fixed; top: 10px; left: calc(10px + " + searchInput.offsetWidth + "px + 65px); padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; z-index: 2; display: none;";
+previousButton.textContent = "←";
+
+document.body.appendChild(previousButton);
+
 var matchCount = document.createElement("div");
 matchCount.id = "match-count";
-matchCount.style.position = "fixed";
-matchCount.style.top = "30px";
-matchCount.style.left = "10px";
-matchCount.style.padding = "5px 10px";
-matchCount.style.backgroundColor = "#fff";
-matchCount.style.border = "1px solid #ccc";
-matchCount.style.borderRadius = "4px";
-matchCount.style.zIndex = "9999";
-matchCount.style.display = "none";
+matchCount.style.cssText = "position: fixed; top: 45px; left: 10px; padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; z-index: 2; display: none;";
 
 document.body.appendChild(matchCount);
+
+var searchResults = [];
+var currentIndex = -1;
 
 searchInput.addEventListener("input", function () {
   var searchText = searchInput.value.trim().toLowerCase();
   var elements = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, label, span");
   var count = 0;
-
-  for (var i = 0; i < elements.length; i++) {
-    var element = elements[i];
-    var text = element.innerText.toLowerCase();
-    var regex = new RegExp("(" + searchText + ")", "gi");
-
-    if (text.includes(searchText)) {
-      var highlightedText = text.replace(regex, "<span class='highlight'>$1</span>");
-      element.innerHTML = highlightedText;
-      count++;
-    } else {
-      element.innerHTML = text;
-    }
-  }
+  searchResults = [];
+  currentIndex = -1;
 
   if (searchText === "") {
     clearSearchResults();
+    return;
   }
 
-  showMatchCount(count);
+  for (var i = 0; i < elements.length; i++) {
+    var element = elements[i];
+    var text = element.textContent.toLowerCase();
+
+    var regex = new RegExp("(?<!\\w)" + escapeRegExp(searchText) + "(?!\\w)", "gi");
+    var match = text.match(regex);
+
+    if (match) {
+      var resultElement = document.createElement(element.tagName);
+
+      for (var j = 0; j < match.length; j++) {
+        var highlightedText = "<span class='highlight'>" + match[j] + "</span>";
+        text = text.replace(new RegExp("\\b" + escapeRegExp(match[j]) + "\\b", "gi"), highlightedText);
+      }
+
+      element.innerHTML = text;
+
+      searchResults.push({
+        element: element,
+        originalText: element.textContent
+      });
+
+      count++;
+    } else {
+      element.innerHTML = element.textContent;
+    }
+  }
+
+  highlightCurrentIndex();
+  showMatchCount(searchResults.length);
   toggleClearButton(searchText);
+  showNavigationButtons();
+  reloadCSS();
+});
+
+searchInput.addEventListener("keydown", function (event) {
+  if (searchInput.value === "") {
+    clearSearchResults();
+    reloadCSS();
+  }
+
+  if (searchInput.value.length === 1 && event.key === "Backspace") {
+    clearSearchResults();
+    toggleClearButton("");
+    reloadCSS();
+  }
 });
 
 clearButton.addEventListener("click", function () {
@@ -71,24 +97,45 @@ clearButton.addEventListener("click", function () {
   searchInput.focus();
   clearSearchResults();
   toggleClearButton("");
+  reloadCSS();
+});
+
+nextButton.addEventListener("click", function () {
+  if (searchResults.length > 0) {
+    currentIndex = (currentIndex + 1) % searchResults.length;
+    highlightCurrentIndex();
+  }
+});
+
+previousButton.addEventListener("click", function () {
+  if (searchResults.length > 0) {
+    currentIndex = (currentIndex - 1 + searchResults.length) % searchResults.length;
+    highlightCurrentIndex();
+  }
 });
 
 function clearSearchResults() {
-  var elements = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, label, span");
-
-  for (var i = 0; i < elements.length; i++) {
-    elements[i].innerHTML = elements[i].innerText;
+  for (var i = 0; i < searchResults.length; i++) {
+    var result = searchResults[i];
+    result.element.innerHTML = result.originalText;
+    result.element.classList.remove("current"); // Remove the "current" class
   }
 
   searchInput.value = "";
   searchInput.focus();
   matchCount.style.display = "none";
+  nextButton.style.display = "none";
+  previousButton.style.display = "none";
+  currentIndex = -1; // Reset currentIndex to -1
   toggleClearButton("");
 }
 
 function showMatchCount(count) {
   if (count > 0 && searchInput.value.trim() !== "") {
-    matchCount.textContent = count + " match(es) found";
+    currentIndex = 0; // Initialize currentIndex as 0
+    var currentIndexDisplay = currentIndex + 1;
+    var totalMatches = searchResults.length;
+    matchCount.textContent = currentIndexDisplay + " of " + totalMatches + " matches found";
     matchCount.style.display = "block";
   } else {
     matchCount.style.display = "none";
@@ -96,9 +143,54 @@ function showMatchCount(count) {
 }
 
 function toggleClearButton(searchText) {
-  if (searchText === "") {
-    clearButton.style.display = "none";
+  clearButton.style.display = searchText === "" ? "none" : "block";
+}
+
+function showNavigationButtons() {
+  if (searchResults.length > 0) {
+    nextButton.style.display = "block";
+    previousButton.style.display = "block";
+    currentIndex = 0; // Set currentIndex to 0
+    highlightCurrentIndex(); // Highlight the current index
   } else {
-    clearButton.style.display = "block";
+    nextButton.style.display = "none";
+    previousButton.style.display = "none";
   }
+}
+
+function highlightCurrentIndex() {
+  for (var i = 0; i < searchResults.length; i++) {
+    var element = searchResults[i].element;
+    if (i === currentIndex) {
+      element.classList.add("highlight-border");
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else {
+      element.classList.remove("highlight-border");
+    }
+  }
+
+  if (currentIndex >= 0) {
+    var currentIndexDisplay = currentIndex + 1;
+    matchCount.textContent = currentIndexDisplay + " of " + searchResults.length + " matches found";
+    matchCount.style.display = "block";
+  } else {
+    matchCount.style.display = "none";
+  }
+}
+
+function escapeRegExp(string) {
+  return string.replace(/[.*+\-?^${}()|[\]\\]/g, "\\$&");
+}
+
+function reloadCSS() {
+  var linkElement = document.querySelector('link[href="styles.css"]');
+  if (linkElement) {
+    linkElement.parentNode.removeChild(linkElement);
+  }
+
+  var newLinkElement = document.createElement('link');
+  newLinkElement.rel = 'stylesheet';
+  newLinkElement.type = 'text/css';
+  newLinkElement.href = 'CSS.css';
+  document.head.appendChild(newLinkElement);
 }
