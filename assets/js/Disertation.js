@@ -1,4 +1,5 @@
 var searchInput = document.createElement("input");
+searchInput.ariaLabel="search-box"
 searchInput.type = "text";
 searchInput.placeholder = "Search";
 searchInput.style.cssText = "position: fixed; top: 10px; left: 10px; padding: 5px; border: 1px solid #ccc; border-radius: 4px; z-index: 2;";
