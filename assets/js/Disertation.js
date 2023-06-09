@@ -117,16 +117,24 @@ previousButton.addEventListener("click", function () {
 function clearSearchResults() {
   for (var i = 0; i < searchResults.length; i++) {
     var result = searchResults[i];
-    result.element.innerHTML = result.originalText;
-    result.element.classList.remove("current"); // Remove the "current" class
+    var element = result.element;
+
+    element.innerHTML = result.originalText;
+    element.classList.remove("current");
   }
+
+  // Clear highlight border from all elements
+  var highlightedElements = document.querySelectorAll(".highlight-border");
+  highlightedElements.forEach(function (element) {
+    element.classList.remove("highlight-border");
+  });
 
   searchInput.value = "";
   searchInput.focus();
   matchCount.style.display = "none";
   nextButton.style.display = "none";
   previousButton.style.display = "none";
-  currentIndex = -1; // Reset currentIndex to -1
+  currentIndex = -1;
   toggleClearButton("");
 }
 
@@ -173,61 +181,40 @@ function highlightCurrentIndex() {
           element.classList.add("highlight-border");
           element.scrollIntoView({ behavior: "smooth", block: "center" });
         }
-      }
-      else if (element.classList.contains("subtitle")) {
+      } else if (element.classList.contains("subtitle")) {
         element = element.closest(".content2-card .body");
         if (element) {
           element.classList.add("highlight-border");
           element.scrollIntoView({ behavior: "smooth", block: "center" });
         }
-      }
-      else {
+      } else {
         element.classList.add("highlight-border");
         element.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     } else {
-      element.classList.remove("highlight-border");
-    }
-
-    // Remove highlight-border class if element is not the current index and had it previously
-    if (!hasHighlightBorder && i !== currentIndex) {
-      if (element.classList.contains("content1-card-overlay")) {
-        element = element.closest(".content1-card");
-      }
-      if (element.classList.contains("subtitle")) {
-        element = element.closest(".content2-card .body");
-      }
-      if (element) {
+      // If the element had the highlight-border class before, remove it
+      if (hasHighlightBorder) {
         element.classList.remove("highlight-border");
       }
     }
-
   }
 
-  if (currentIndex >= 0) {
-    var currentIndexDisplay = currentIndex + 1;
-    matchCount.textContent =
-      currentIndexDisplay + " of " + searchResults.length + " matches found";
-    matchCount.style.display = "block";
-  } else {
-    matchCount.style.display = "none";
-  }
-}
-
-
-function escapeRegExp(string) {
-  return string.replace(/[.*+\-?^${}()|[\]\\]/g, "\\$&");
+  // Update the match count display
+  var currentIndexDisplay = currentIndex + 1;
+  var totalMatches = searchResults.length;
+  matchCount.textContent = currentIndexDisplay + " of " + totalMatches + " matches found";
+  matchCount.style.display = "block";
 }
 
 function reloadCSS() {
-  var linkElement = document.querySelector('link[href="styles.css"]');
-  if (linkElement) {
-    linkElement.parentNode.removeChild(linkElement);
+  var links = document.getElementsByTagName("link");
+  for (var i = 0; i < links.length; i++) {
+    var href = links[i].href;
+    links[i].href = href;
   }
+}
 
-  var newLinkElement = document.createElement('link');
-  newLinkElement.rel = 'stylesheet';
-  newLinkElement.type = 'text/css';
-  newLinkElement.href = 'CSS.css';
-  document.head.appendChild(newLinkElement);
+// Helper function to escape special characters in regex
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
