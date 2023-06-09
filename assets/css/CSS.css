@@ -1,17 +1,24 @@
 @charset "UTF-8";
+
+.content1-card.highlighted-parent {
+  border: 2px solid #ff0000;
+  /* Update the border style as needed */
+}
+
 .content1-card.highlight-border {
-  border: 2px solid #ff0000; /* Update the border style as needed */
+  border: 2px solid #ff0000;
+  /* Update the border style as needed */
 }
+
 .highlight-border {
-  border: 2px solid #ff0000; /* Replace with your desired border style */
-}
-.highlight {
-  background-color: yellow;
+  border: 2px solid #ff0000;
+  /* Replace with your desired border style */
 }
 
 .current {
   background-color: aqua;
 }
+
 /*  */
 .search-box {
   float: left;

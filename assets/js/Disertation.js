@@ -160,23 +160,60 @@ function showNavigationButtons() {
 
 function highlightCurrentIndex() {
   for (var i = 0; i < searchResults.length; i++) {
-    var element = searchResults[i].element;
+    var result = searchResults[i];
+    var element = result.element;
+
+    // Check if the element has the highlight-border class
+    var hasHighlightBorder = element.classList.contains("highlight-border");
+
     if (i === currentIndex) {
-      element.classList.add("highlight-border");
-      element.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (element.classList.contains("content1-card-overlay")) {
+        element = element.closest(".content1-card");
+        if (element) {
+          element.classList.add("highlight-border");
+          element.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }
+      else if (element.classList.contains("subtitle")) {
+        element = element.closest(".content2-card .body");
+        if (element) {
+          element.classList.add("highlight-border");
+          element.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }
+      else {
+        element.classList.add("highlight-border");
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
     } else {
       element.classList.remove("highlight-border");
     }
+
+    // Remove highlight-border class if element is not the current index and had it previously
+    if (!hasHighlightBorder && i !== currentIndex) {
+      if (element.classList.contains("content1-card-overlay")) {
+        element = element.closest(".content1-card");
+      }
+      if (element.classList.contains("subtitle")) {
+        element = element.closest(".content2-card .body");
+      }
+      if (element) {
+        element.classList.remove("highlight-border");
+      }
+    }
+
   }
 
   if (currentIndex >= 0) {
     var currentIndexDisplay = currentIndex + 1;
-    matchCount.textContent = currentIndexDisplay + " of " + searchResults.length + " matches found";
+    matchCount.textContent =
+      currentIndexDisplay + " of " + searchResults.length + " matches found";
     matchCount.style.display = "block";
   } else {
     matchCount.style.display = "none";
   }
 }
+
 
 function escapeRegExp(string) {
   return string.replace(/[.*+\-?^${}()|[\]\\]/g, "\\$&");
