@@ -1,5 +1,7 @@
 @charset "UTF-8";
-
+.box-shadow{
+  box-shadow: 0px 15px 10px -15px #111;
+}
 .content1-card.highlighted-parent {
   border: 2px solid #ff0000;
   /* Update the border style as needed */
@@ -230,7 +232,6 @@ img {
   vertical-align: middle;
   border-style: none;
   border-radius: 5%;
-  padding-bottom: 10px;
 }
 
 label {
@@ -341,6 +342,7 @@ h6,
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
+  
 }
 
 
@@ -2943,6 +2945,7 @@ p {
   display: block;
   position: relative;
   overflow: hidden;
+  
 }
 
 .content1-card .content1-card-img {
@@ -3004,10 +3007,11 @@ p {
   display: -ms-flexbox;
   display: flex;
   text-align: left;
-  border: 1px solid #dee2e6;
   margin-bottom: 30px;
   border-radius: 0;
   overflow: hidden;
+  box-shadow: 0px 15px 10px -15px #111;
+
 }
 
 .content3-card-header {
@@ -3158,7 +3162,7 @@ p {
   -ms-flex-align: center;
   align-items: center;
   text-align: left;
-  padding-bottom: 50px;
+  box-shadow: 0px 10px 10px -15px #111;   
 }
 
 .about-img-holder {
@@ -3195,6 +3199,7 @@ p {
 
 .section {
   padding: 70px 10px;
+  
 }
 
 .section .section-title {

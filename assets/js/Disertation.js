@@ -35,7 +35,7 @@ var currentIndex = -1;
 
 searchInput.addEventListener("input", function () {
   var searchText = searchInput.value.trim().toLowerCase();
-  var elements = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, label, span");
+  var elements = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, span");
   var count = 0;
   searchResults = [];
   currentIndex = -1;
@@ -168,35 +168,26 @@ function showNavigationButtons() {
 }
 
 function highlightCurrentIndex() {
-  for (var i = 0; i < searchResults.length; i++) {
-    var result = searchResults[i];
+  var highlightedElements = document.querySelectorAll(".highlight-border");
+
+  // Remove highlight border from all elements
+  highlightedElements.forEach(function (element) {
+    element.classList.remove("highlight-border");
+  });
+
+  if (currentIndex >= 0 && currentIndex < searchResults.length) {
+    var result = searchResults[currentIndex];
     var element = result.element;
 
-    // Check if the element has the highlight-border class
-    var hasHighlightBorder = element.classList.contains("highlight-border");
+    if (element.classList.contains("content1-card-overlay")) {
+      element = element.closest(".content1-card");
+    } else if (element.classList.contains("subtitle")) {
+      element = element.closest(".content2-card .body");
+    }
 
-    if (i === currentIndex) {
-      if (element.classList.contains("content1-card-overlay")) {
-        element = element.closest(".content1-card");
-        if (element) {
-          element.classList.add("highlight-border");
-          element.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-      } else if (element.classList.contains("subtitle")) {
-        element = element.closest(".content2-card .body");
-        if (element) {
-          element.classList.add("highlight-border");
-          element.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-      } else {
-        element.classList.add("highlight-border");
-        element.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    } else {
-      // If the element had the highlight-border class before, remove it
-      if (hasHighlightBorder) {
-        element.classList.remove("highlight-border");
-      }
+    if (element) {
+      element.classList.add("highlight-border");
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }
 
@@ -206,6 +197,7 @@ function highlightCurrentIndex() {
   matchCount.textContent = currentIndexDisplay + " of " + totalMatches + " matches found";
   matchCount.style.display = "block";
 }
+
 
 function reloadCSS() {
   var links = document.getElementsByTagName("link");

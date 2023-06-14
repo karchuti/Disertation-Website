@@ -5,27 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch Edge",
-            "request": "launch",
-            "type": "msedge",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
-        },
-        {
-            "name": "Launch Chrome",
-            "request": "launch",
             "type": "chrome",
-            "url": "c:\\Users\\k\\Documents\\GitHub\\Disertation-Website\\index.html",
-            "webRoot": "${workspaceFolder}"
-        },
-
-        {
-            "type": "msedge",
             "request": "launch",
             "name": "Open index.html",
-            "file": "c:\\Users\\k\\Documents\\GitHub\\Disertation-Website\\index.html"
+            "file": "c:\\Users\\igor\\Disertation-Website\\index.html"
         }
-
-        
     ]
 }
