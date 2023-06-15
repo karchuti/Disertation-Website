@@ -3043,6 +3043,7 @@ p {
 .content3-card-header {
   min-width: 350px;
   max-width: 350px;
+  margin-bottom: 15px;
 }
 
 .content3-card-img {
