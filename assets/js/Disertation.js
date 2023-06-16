@@ -1,32 +1,43 @@
 var searchInput = document.createElement("input");
-searchInput.ariaLabel="search-box"
+searchInput.ariaLabel = "search-box";
 searchInput.type = "text";
 searchInput.placeholder = "Search";
-searchInput.style.cssText = "position: fixed; top: 10px; left: 10px; padding: 5px; border: 1px solid #ccc; border-radius: 4px; z-index: 2;";
+searchInput.style.cssText =
+  "position: fixed; top: 10px; left: 10px; padding: 5px; border: 1px solid #ccc; border-radius: 4px; z-index: 2;";
 
 document.body.appendChild(searchInput);
 
 var clearButton = document.createElement("button");
 clearButton.textContent = "Clear";
-clearButton.style.cssText = "position: fixed; top: 10px; left: calc(10px + " + searchInput.offsetWidth + "px + 5px); padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; z-index: 2; display: none;";
+clearButton.style.cssText =
+  "position: fixed; top: 10px; left: calc(10px + " +
+  searchInput.offsetWidth +
+  "px + 5px); padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; z-index: 2; display: none;";
 
 document.body.appendChild(clearButton);
 
 var nextButton = document.createElement("button");
-nextButton.style.cssText = "position: fixed; top: 10px; left: calc(10px + " + searchInput.offsetWidth + "px + 105px); padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; z-index: 2; display: none;";
+nextButton.style.cssText =
+  "position: fixed; top: 10px; left: calc(10px + " +
+  searchInput.offsetWidth +
+  "px + 105px); padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; z-index: 2; display: none;";
 nextButton.textContent = "→";
 
 document.body.appendChild(nextButton);
 
 var previousButton = document.createElement("button");
-previousButton.style.cssText = "position: fixed; top: 10px; left: calc(10px + " + searchInput.offsetWidth + "px + 65px); padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; z-index: 2; display: none;";
+previousButton.style.cssText =
+  "position: fixed; top: 10px; left: calc(10px + " +
+  searchInput.offsetWidth +
+  "px + 65px); padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; z-index: 2; display: none;";
 previousButton.textContent = "←";
 
 document.body.appendChild(previousButton);
 
 var matchCount = document.createElement("div");
 matchCount.id = "match-count";
-matchCount.style.cssText = "position: fixed; top: 45px; left: 10px; padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; z-index: 2; display: none;";
+matchCount.style.cssText =
+  "position: fixed; top: 45px; left: 10px; padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; z-index: 2; display: none;";
 
 document.body.appendChild(matchCount);
 
@@ -34,7 +45,7 @@ var searchResults = [];
 var currentIndex = -1;
 
 searchInput.addEventListener("input", function () {
-  var searchText = searchInput.value.trim().toLowerCase();
+  var searchText = searchInput.value.trim();
   var elements = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, span");
   var count = 0;
   searchResults = [];
@@ -47,7 +58,7 @@ searchInput.addEventListener("input", function () {
 
   for (var i = 0; i < elements.length; i++) {
     var element = elements[i];
-    var text = element.textContent.toLowerCase();
+    var text = element.textContent;
 
     var regex = new RegExp("(?<!\\w)" + escapeRegExp(searchText) + "(?!\\w)", "gi");
     var match = text.match(regex);
@@ -56,15 +67,26 @@ searchInput.addEventListener("input", function () {
       var resultElement = document.createElement(element.tagName);
 
       for (var j = 0; j < match.length; j++) {
-        var highlightedText = "<span class='highlight'>" + match[j] + "</span>";
-        text = text.replace(new RegExp("\\b" + escapeRegExp(match[j]) + "\\b", "gi"), highlightedText);
+        var highlightedText = document.createElement("span");
+        highlightedText.className = "highlight";
+        highlightedText.textContent = match[j];
+        var regexCaseSensitive = new RegExp("(?<!\\w)" + escapeRegExp(match[j]) + "(?!\\w)", "g");
+        text = text.replace(regexCaseSensitive, highlightedText.outerHTML);
       }
 
-      element.innerHTML = text;
+      resultElement.innerHTML = text;
+
+      // Copy attributes from the original element to the new result element
+      Array.from(element.attributes).forEach(function (attr) {
+        resultElement.setAttribute(attr.name, attr.value);
+      });
+
+      // Replace the original element with the new result element
+      element.parentNode.replaceChild(resultElement, element);
 
       searchResults.push({
-        element: element,
-        originalText: element.textContent
+        element: resultElement,
+        originalText: element.textContent,
       });
 
       count++;
@@ -197,7 +219,6 @@ function highlightCurrentIndex() {
   matchCount.textContent = currentIndexDisplay + " of " + totalMatches + " matches found";
   matchCount.style.display = "block";
 }
-
 
 function reloadCSS() {
   var links = document.getElementsByTagName("link");
