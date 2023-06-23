@@ -52,11 +52,9 @@ searchInput.addEventListener("input", function () {
         text = text.replace(regexCaseSensitive, highlightedText.outerHTML);
       }
       resultElement.innerHTML = text;
-      // Copy attributes from the original element to the new result element
       Array.from(element.attributes).forEach(function (attr) {
         resultElement.setAttribute(attr.name, attr.value);
       });
-      // Replace the original element with the new result element
       element.parentNode.replaceChild(resultElement, element);
       searchResults.push({
         element: resultElement,
@@ -110,7 +108,6 @@ function clearSearchResults() {
     element.innerHTML = result.originalText;
     element.classList.remove("current");
   }
-  // Clear highlight border from all elements
   var highlightedElements = document.querySelectorAll(".highlight-border");
   highlightedElements.forEach(function (element) {
     element.classList.remove("highlight-border");
@@ -125,7 +122,7 @@ function clearSearchResults() {
 }
 function showMatchCount(count) {
   if (count > 0 && searchInput.value.trim() !== "") {
-    currentIndex = 0; // Initialize currentIndex as 0
+    currentIndex = 0; 
     var currentIndexDisplay = currentIndex + 1;
     var totalMatches = searchResults.length;
     matchCount.textContent = currentIndexDisplay + " of " + totalMatches + " matches found";
@@ -141,8 +138,8 @@ function showNavigationButtons() {
   if (searchResults.length > 0) {
     nextButton.style.display = "block";
     previousButton.style.display = "block";
-    currentIndex = 0; // Set currentIndex to 0
-    highlightCurrentIndex(); // Highlight the current index
+    currentIndex = 0;
+    highlightCurrentIndex();
   } else {
     nextButton.style.display = "none";
     previousButton.style.display = "none";
@@ -150,7 +147,6 @@ function showNavigationButtons() {
 }
 function highlightCurrentIndex() {
   var highlightedElements = document.querySelectorAll(".highlight-border");
-  // Remove highlight border from all elements
   highlightedElements.forEach(function (element) {
     element.classList.remove("highlight-border");
   });
@@ -169,7 +165,6 @@ function highlightCurrentIndex() {
       element.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }
-  // Update the match count display
   var currentIndexDisplay = currentIndex + 1;
   var totalMatches = searchResults.length;
   matchCount.textContent = currentIndexDisplay + " of " + totalMatches + " matches found";
@@ -182,18 +177,14 @@ function reloadCSS() {
     links[i].href = href;
   }
 }
-// Helper function to escape special characters in regex
 function escapeRegExp(string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
-////slideshow code
 let slideIndex = 1;
 showSlides(slideIndex);
-// Next/previous controls
 function plusSlides(n) {
   showSlides((slideIndex += n));
 }
-// Thumbnail image controls
 function currentSlide(n) {
   showSlides((slideIndex = n));
 }
@@ -216,7 +207,6 @@ function showSlides(n) {
   slides[slideIndex - 1].style.display = "block";
   dots[slideIndex - 1].className += " active";
 }
-///// progress bar
 window.onscroll = function () {
   scrollFunction();
 };
@@ -227,15 +217,11 @@ function scrollFunction() {
   var scrollPos = (elementScroll / windowHeight) * 100;
   document.getElementById("progBar").style.width = scrollPos + "%";
 }
-///////////
-// Slideshow code
 let slideIndex2 = 1;
 showSlides2(slideIndex2);
-// Next/previous controls
 function plusSlides2(n) {
   showSlides2((slideIndex2 += n));
 }
-// Thumbnail image controls
 function currentSlide2(n) {
   showSlides2((slideIndex2 = n));
 }
