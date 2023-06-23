@@ -300,6 +300,14 @@ li {
 .header-fixed .menu-btn:checked~.menu-icon:not(.steps) .navicon:after {
   top: 0;
 }
+.menu-label {
+  display: none;
+}
+
+.menu-btn.visible .menu-label {
+  display: inline-block;
+}
+
 @media (min-width: 992px) {
   .header-fixed li {
     float: left;
