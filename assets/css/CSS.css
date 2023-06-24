@@ -308,7 +308,7 @@ li {
   display: inline-block;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   .header-fixed li {
     float: left;
   }
