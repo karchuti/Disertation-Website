@@ -529,13 +529,13 @@ h6,
   width: 0%;
 }
 .text-justify {
-  text-align: justify !important;
+  text-align: justify ;
 }
 .text-wrap {
-  white-space: normal !important;
+  white-space: normal ;
 }
 .text-nowrap {
-  white-space: nowrap !important;
+  white-space: nowrap ;
 }
 .text-truncate {
   overflow: hidden;
@@ -543,70 +543,62 @@ h6,
   white-space: nowrap;
 }
 .text-left {
-  text-align: left !important;
+  text-align: left ;
 }
 .text-right {
-  text-align: right !important;
+  text-align: right ;
 }
 .text-center {
-  text-align: center !important;
+  text-align: center ;
 }
 @media (min-width: 576px) {
   .text-sm-left {
-    text-align: left !important;
+    text-align: left ;
   }
   .text-sm-right {
-    text-align: right !important;
+    text-align: right ;
   }
   .text-sm-center {
-    text-align: center !important;
+    text-align: center ;
   }
 }
 @media (min-width: 768px) {
   .text-md-left {
-    text-align: left !important;
+    text-align: left ;
   }
   .text-md-right {
-    text-align: right !important;
+    text-align: right ;
   }
   .text-md-center {
-    text-align: center !important;
+    text-align: center ;
   }
 }
 @media (min-width: 992px) {
   .text-lg-left {
-    text-align: left !important;
+    text-align: left ;
   }
   .text-lg-right {
-    text-align: right !important;
+    text-align: right ;
   }
   .text-lg-center {
-    text-align: center !important;
+    text-align: center ;
   }
 }
 @media (min-width: 1200px) {
   .text-xl-left {
-    text-align: left !important;
+    text-align: left ;
   }
   .text-xl-right {
-    text-align: right !important;
+    text-align: right ;
   }
   .text-xl-center {
-    text-align: center !important;
+    text-align: center ;
   }
 }
 .font-weight-normal {
-  font-weight: 400 !important;
+  font-weight: 400 ;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 500;
-  color: #000000;
-}
+
 p {
   font-size: calc(15px + (15 - 13) * ((100vw - 300px) / (1300 - 300)));
   font-weight: 100;
@@ -744,7 +736,7 @@ p {
   font-weight: 100;
 }
 .content3-card-caption {
-  margin: 15px 0 15px !important;
+  margin: 15px 0 15px ;
 }
 .content3-card-caption i {
   display: inline-block;
@@ -820,7 +812,7 @@ p {
     background-size: cover;
   }
   .header-content {
-    padding-left: calc(100% / 5) !important;
+    padding-left: calc(100% / 5) ;
   }
 }
 .about {
