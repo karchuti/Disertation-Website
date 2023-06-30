@@ -1,4 +1,10 @@
 @charset "UTF-8";
+.Refrences{
+  line-height: 3;
+}
+.Refrences li{
+  list-style: circle;
+}
 .slider-2 {
   width: 100%;
   height: 510px;
@@ -638,6 +644,7 @@ p {
   opacity: 0;
   visibility: hidden;
   transition: all, 0.3s;
+  background-color: white;
 }
 @media (prefers-reduced-motion: reduce) {
   .content2-card .body .subtitle {
@@ -672,12 +679,13 @@ p {
   text-align: center;
   visibility: hidden;
   opacity: 0;
-  background-image: linear-gradient(to top, #e1dfed 0%, rgba(225, 223, 237, 0.7) 99%, rgba(225, 223, 237, 0.8) 100%);
+  background-color: white;
   transition: all, 0.3s;
   width: 0;
   height: 0;
   border-radius: 50%;
   overflow: hidden;
+  cursor: pointer;
 }
 @media (prefers-reduced-motion: reduce) {
   .content1-card .content1-card-overlay {
