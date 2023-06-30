@@ -1,3 +1,4 @@
+tabindex=0 
 var searchInput = document.createElement("input");
 searchInput.ariaLabel = "search-box";
 searchInput.type = "text";
