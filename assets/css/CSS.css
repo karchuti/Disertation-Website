@@ -97,7 +97,6 @@
   position: absolute;
   top: 0;
   left: 0;
-  /* transition: all 0.5s ease-in-out; */
 }
 .slider img:first-child {
   z-index: 1;
@@ -122,17 +121,14 @@
 .dot:hover {
   background-color: lightblue;
 }
-/* Slideshow container */
 .slideshow-container {
   max-width: 1000px;
   position: relative;
   margin: auto;
 }
-/* Hide the images by default */
 .mySlides {
   display: none;
 }
-/* Next & previous buttons */
 .prev,
 .next {
   cursor: pointer;
@@ -159,7 +155,6 @@
 .next:hover {
   background-color: lightblue;
 }
-/* Fading animation */
 .fade {
   animation-name: fade;
   animation-duration: 1.5s;
@@ -179,7 +174,6 @@
   align-items: center;
   text-align: center;
   height: 100px;
-  /* Adjust the height as per your design */
 }
 .sitemap {
   display: flex;
@@ -199,15 +193,12 @@
 }
 .content1-card.highlighted-parent {
   border: 2px solid #ff0000;
-  /* Update the border style as needed */
 }
 .content1-card.highlight-border {
   border: 2px solid #ff0000;
-  /* Update the border style as needed */
 }
 .highlight-border {
   border: 2px solid #ff0000;
-  /* Replace with your desired border style */
 }
 /*  */
 .search-box {
@@ -286,7 +277,6 @@ li {
   width: 100%;
   z-index: 1;
 }
-/* menu btn */
 .header-fixed .menu-btn {
   display: none;
 }
