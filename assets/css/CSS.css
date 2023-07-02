@@ -309,11 +309,9 @@ li {
 .menu-label {
   display: none;
 }
-
 .menu-btn.visible .menu-label {
   display: inline-block;
 }
-
 .tour{
   display: none;
 }
@@ -341,7 +339,6 @@ li {
   #Refrences{
     display: block;
   }
-
 }
 #video {
   position: relative;
@@ -618,7 +615,6 @@ h6,
 .font-weight-normal {
   font-weight: 400 ;
 }
-
 p {
   font-size: calc(15px + (15 - 13) * ((100vw - 300px) / (1300 - 300)));
   font-weight: 100;
@@ -871,6 +867,3 @@ p {
     margin-bottom: 20px;
   }
 }
-/* .section {
-  padding: 100px;
-} */
