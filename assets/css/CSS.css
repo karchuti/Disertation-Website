@@ -314,6 +314,12 @@ li {
   display: inline-block;
 }
 
+.tour{
+  display: none;
+}
+#Refrences{
+  display: none;
+}
 @media (min-width: 1200px) {
   .header-fixed li {
     float: left;
@@ -329,6 +335,13 @@ li {
   .header-fixed .menu-icon {
     display: none;
   }
+  .tour{
+    display: block;
+  }
+  #Refrences{
+    display: block;
+  }
+
 }
 #video {
   position: relative;
